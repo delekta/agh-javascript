@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge"><!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+    integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
+  <!-- Page title -->
+
+  <title>
+    Eloquent Javascript
+  </title>
+
+  <style>
+    body{
+      padding-top: 56px;
+    }
+    p{
+        margin: 0;
+        text-indent: 30px;
+        text-align: justify;
+    }
+    section{
+        padding: 10px;
+    }
+    h5{
+        padding: 5px 0;
+    }
+  </style>
+
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-md navbar-light bg-light fixed-top">
+        <a class="navbar-brand" href="#">Eloquent <i class="fab fa-js-square"></i></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+          aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+          <div class="navbar-nav">
+            <a class="nav-item nav-link" href="bootstrap.html">What is Javascript?</a>
+            <a class="nav-item nav-link" href="bootstrap-types.html">Types</a>
+            <a class="nav-item nav-link active" href="bootstrap-program-structure.html">Program structure</a>
+            <a class="nav-item nav-link" href="bootstrap-functions.html">Functions</a>
+            <a class="nav-item nav-link" href="bootstrap-data-structures.html">Data structures</a>
+          </div>
+        </div>
+    </nav>
+
+  <main class="container">
+    <!--Tutaj treść strony / Here the content of the page -->
+    <section id="programstructure">
+        <h1>
+          Program structure
+        </h1>
+        <p>
+          In this chapter, we will start to do things that can actually be called program- ming. We will expand our
+          command of the JavaScript language beyond the nouns and sentence fragments we’ve seen so far, to the point where
+          we can express meaningful prose.
+        </p>
+  
+        <h5>
+          Expressions and statements
+        </h5>
+  
+        <p>
+          In Chapter 1, we made values and applied operators to them to get new values. Creating values like this is the
+          main substance of any JavaScript program. But that substance has to be framed in a larger structure to be
+          useful. So that’s what we’ll cover next.
+        </p>
+  
+        <p>
+          A fragment of code that produces a value is called an expression. Every value that is written literally (such as
+          22 or "psychoanalysis") is an expression. An expression between parentheses is also an expression, as is a
+          binary operator applied to two expressions or a unary operator applied to one.
+        </p>
+  
+        <p>
+          This shows part of the beauty of a language-based interface. Expressions can contain other expressions in a way
+          similar to how subsentences in human languages are nested—a subsentence can contain its own subsentences, and so
+          on. This allows us to build expressions that describe arbitrarily complex computations.
+        </p>
+  
+        <p>
+          If an expression corresponds to a sentence fragment, a JavaScript statement corresponds to a full sentence. A
+          program is a list of statements.
+          The simplest kind of statement is an expression with a semicolon after it. This is a program:
+  
+          1; !false;
+          It is a useless program, though. An expression can be content to just produce
+          22
+          —_why, Why’s (Poignant) Guide to Ruby
+          a value, which can then be used by the enclosing code. A statement stands on its own, so it amounts to something
+          only if it affects the world.
+        </p>
+      </section>
+  
+  </main>
+
+  <footer class="bg-dark text-light">
+    <!-- Tutaj treść stopki / Here the content of the footer -->
+    <div class="d-flex justify-content-center">
+      Kamil Delekta - programista aplikacji webowych. &nbsp <a href="mailto:twoj.adres.email"><i class="far fa-envelope"></i> mojmail@gmail.com</a>
+    </div>
+  </footer>
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"
+    integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
+    crossorigin="anonymous"></script>
+</body>
+</html>

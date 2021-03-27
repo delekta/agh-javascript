@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge"><!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+    integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
+  <!-- Page title -->
+
+  <title>
+    Eloquent Javascript
+  </title>
+
+  <style>
+    body{
+      padding-top: 56px;
+    }
+    p{
+        margin: 0;
+        text-indent: 30px;
+        text-align: justify;
+    }
+    section{
+        padding: 10px;
+    }
+    h5{
+        padding: 5px 0;
+    }
+  </style>
+
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-md navbar-light bg-light fixed-top">
+        <a class="navbar-brand" href="#">Eloquent <i class="fab fa-js-square"></i></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+          aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+          <div class="navbar-nav">
+            <a class="nav-item nav-link" href="bootstrap.html">What is Javascript?</a>
+            <a class="nav-item nav-link active" href="bootstrap-types.html">Types</a>
+            <a class="nav-item nav-link" href="bootstrap-program-structure.html">Program structure</a>
+            <a class="nav-item nav-link" href="bootstrap-functions.html">Functions</a>
+            <a class="nav-item nav-link" href="bootstrap-data-structures.html">Data structures</a>
+          </div>
+        </div>
+      </nav>
+
+  <main class="container">
+    <!--Tutaj treść strony / Here the content of the page -->
+    <section id="types">
+      <h1>
+        Types
+      </h1>
+
+      <h5>
+        Numbers
+      </h5>
+
+      <p>
+        Values of the number type are, unsurprisingly, numeric values. In a JavaScript program, they are written as
+        follows:
+        Use that in a program, and it will cause the bit pattern for the number 13 to come into existence inside the
+        computer’s memory.
+        JavaScript uses a fixed number of bits, 64 of them, to store a single number value. There are only so many
+        patterns you can make with 64 bits, which means that the number of different numbers that can be represented is
+        limited. With N decimal digits, you can represent 10N numbers. Similarly, given 64 binary digits, you can
+        represent 264 different numbers, which is about 18 quintillion (an 18 with 18 zeros after it). That’s a lot.
+      </p>
+
+      <h5>
+        Strings
+      </h5>
+
+      <p>
+        The next basic data type is the string. Strings are used to represent text. They are written by enclosing their
+        content in quotes.
+        `Down on the sea` "Lie on the ocean" 'Float on the ocean'
+        You can use single quotes, double quotes, or backticks to mark strings, as long as the quotes at the start and
+        the
+        end of the string match.
+        Almost anything can be put between quotes, and JavaScript will make a string value out of it. But a few
+        characters
+        are more difficult. You can imagine how putting quotes between quotes might be hard. Newlines (the characters
+        you
+        get when you press enter) can be included without escaping only when the string is quoted with backticks (\‘).
+      </p>
+
+      <h5>
+        Boolean values
+      </h5>
+
+      <p>
+        It is often useful to have a value that distinguishes between only two possibili- ties, like “yes” and “no” or
+        “on” and “off”. For this purpose, JavaScript has a Boolean type, which has just two values, true and false,
+        which
+        are written as those words.
+      </p>
+    </section>
+
+    <section class="d-flex justify-content-center flex-column mb-4">
+        <h4>Summary table</h4>
+        <table class="table-dark table-striped table-bordered table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th class="p-2">Data Type</th>
+                    <th class="p-2">Memory Usage</th>
+                    <th class="p-2">Example</th>
+                </tr>
+            </thead>
+            <tr>
+                <td class="p-2">Number</td>
+                <td class="p-2">8 bytes</td>
+                <td class="p-2">var x = 2</td>
+            </tr>
+            <tr>
+                <td class="p-2">String</td>
+                <td class="p-2">2 bytes per character</td>
+                <td class="p-2">var x = "ala"</td>
+            </tr>
+            <tr>
+                <td class="p-2">Boolean</td>
+                <td class="p-2">1 byte</td>
+                <td class="p-2">var x = true</td>
+            </tr>
+        </table>
+    </section>
+
+  </main>
+
+  <footer class="bg-dark text-light">
+    <!-- Tutaj treść stopki / Here the content of the footer -->
+    <div class="d-flex justify-content-center">
+      Kamil Delekta - programista aplikacji webowych. &nbsp <a href="mailto:twoj.adres.email"><i class="far fa-envelope"></i> mojmail@gmail.com</a>
+    </div>
+  </footer>
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"
+    integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
+    crossorigin="anonymous"></script>
+</body>
+</html>
