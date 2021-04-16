@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8">
+    <title>
+      Page title
+    </title>
+    <style>
+        *{
+            margin: 0px;
+            padding: 0px;
+        }
+
+        canvas{
+            border: 1px solid black;
+            display: block;
+            margin: 50px auto;
+        }
+
+    </style>
+  </head>
+  <body>
+    <main>
+      <canvas id="lineChart">
+        Wygląda na to, że twoja przeglądarka nie obsługuje elementu "canvas" / It looks like your browser does not support the "canvas" element
+      </canvas>
+
+      <form name="lineChart">
+        <label>
+          Nazwa
+          <input name="legend" type="textarea">
+        </label>
+        <label>
+          Wartosc
+          <input type="textarea" name="value">
+        </label>
+        <input type="button" id="addBtnLine" value="Dodaj">
+    </form>
+
+      <canvas id="pieChart">
+        Wygląda na to, że twoja przeglądarka nie obsługuje elementu "canvas" / It looks like your browser does not support the "canvas" element
+      </canvas>
+    <div>Dodaj pole do wykresu:</div>
+    <form name="pieChart">
+        <label>
+          Nazwa
+          <input name="legend" type="textarea">
+        </label>
+        <label>
+          Wartosc
+          <input type="textarea" name="value">
+        </label>
+        <input type="button" id="addBtnPie" value="Dodaj">
+    </form>
+    </main>
+    <script src="visualLib.js"></script>
+  </body>
+</html>
