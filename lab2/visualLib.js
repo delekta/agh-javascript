@@ -31,8 +31,6 @@ let data={
     14:500,
     15: 1100,
     16: 3000,
-    17: 3000,
-    18: 3000,
 }
 
 var entries = Object.entries(data);
@@ -69,8 +67,6 @@ function blocks(count){
 function drawAxis(){
     ctx.lineWidth = 1;
     
-    // console.log(maxValue);
-    
     let yPlot = 40;
     let pop = 0;
 
@@ -86,6 +82,7 @@ function drawAxis(){
 
     // values
     ctx.moveTo(blocks(5), blocks(40))
+    ctx.font = `12px Arial`;
     while(yPlot > 4){
         ctx.fillText(pop, blocks(1), blocks(yPlot));
         ctx.beginPath();
@@ -109,15 +106,15 @@ function drawChart(){
 
     var xPlot = 5 + divX;
 
-    
+    ctx.font = `12px Arial`;
     for(const [point, value] of entries){
          var populationInBlocks = value / oneCellValue;
-         ctx.lineWidth = 1
-         ctx.lineWidth = 3;
+         ctx.lineWidth = 3
          ctx.lineTo(blocks(xPlot), blocks(40 - populationInBlocks));
          ctx.stroke()
          // drawing axis
          ctx.lineWidth = 1
+         // draw x-axis legend
          ctx.fillText(point, blocks(xPlot - 0.5), blocks(40 + 3));
          ctx.beginPath();
          ctx.moveTo(blocks(xPlot), blocks(40) - cellSize/2)
@@ -131,13 +128,14 @@ function drawChart(){
 }
 
 function drawTitle(){
-    ctx.beginPath();
-    ctx.lineWidth = 2;
+    let newCtx = canvas.getContext("2d");
+    newCtx.beginPath();
+    newCtx.lineWidth = 2;
     var fontSize = 30 / (850 / canvas.width);
-    ctx.font = `${fontSize}px Arial`;
-    ctx.textAlign = "center"
-    ctx.fillText(title, blocks(40), blocks(3))
-    ctx.textAlign = "start";
+    newCtx.font = `${fontSize}px Arial`;
+    newCtx.textAlign = "center"
+    newCtx.fillText(title, blocks(40), blocks(3))
+    newCtx.textAlign = "start";
 }
 
 function drawLineChart(){
