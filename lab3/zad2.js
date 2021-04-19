@@ -105,7 +105,10 @@ function drawChart(){
             fontColor: 'black'
             }
         },
-        responsive: false
+        responsive: false,
+        animation: {
+            duration: 0
+        }
         };
 
         if(chart != null){
