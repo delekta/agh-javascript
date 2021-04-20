@@ -8,6 +8,8 @@ var currValue = _default
 btn.addEventListener('click', () => {
     currValue = input.value
     for(let i = 0; i < spans.length; i++){
+        var newElement = document.createElement("span");
+        newElement.value = String(currValue)
         spans[i].textContent = String(currValue); 
     }
     setInterval(decrementSpans, 1000)
