@@ -6,3 +6,4 @@ zips
 *.zip
 *.pdf
 *chartJS
+node_modules/
