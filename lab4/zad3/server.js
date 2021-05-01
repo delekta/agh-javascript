@@ -1,3 +1,11 @@
+function callback(path){
+    
+}
+
+function writeResponse(response, res){
+    response.write(res)
+}
+
 /**
 	 * Handles incoming requests.
 	 *
@@ -20,14 +28,42 @@
             response.writeHead(200, { "Content-Type": "text/plain; charset=utf-8" });
             /* ************************************************** */
             console.log("Creating a response body");
-            if (request.method == 'GET') // If the GET method was used to send data to the server
-                // Place given data (here: 'Hello <name>') in the body of the answer
-                response.write(`Hello ${url.searchParams.get('name')}`); // "url.searchParams.get('name')" contains the contents of the field (form) named 'name'
-            else // If other method was used to send data to the server
+            if (request.method == 'GET'){ // If the GET method was used to send data to the server
+                var res = "";
+                let path = url.searchParams.get('name');
+                console.log(path);
+                console.log(path);
+                const fs = require('fs');
+                fs.access(path, fs.constants.F_OK, function(err){
+                    if(!err){
+                        fs.readFile(path, (err, data) => {
+                            if(!err){
+                                res += `File "${path}" exist\n`
+                                // Uncomment to display File content!
+                                // res += "[File: " + path + " content]\n"
+                                // res += data;
+                                // console.log("res += data");
+                            }else{
+                                res += `Directory "${path}" exist\n`
+                            }
+                            response.write(res)
+                            console.log("Secesfully sending a response!");
+                            response.end();
+                        })  
+                    }else{
+                        response.write(`File/Directory "${path}" DOES NOT exist`)
+                        console.log("Secesfully sending a response!");
+                        response.end();
+                    }
+                });
+            }
+            else{
+                // If other method was used to send data to the server
                 response.write(`This application does not support the ${request.method} method`);
-            /* ************************************************** */
-            console.log("Sending the response");
-            response.end(); // The end of the response — send it to the browser
+                /* ************************************************** */
+                console.log("Sending the response");
+                response.end(); // The end of the response — send it to the browser
+            } 
         }
         else { // Generating the form
             /* ************************************************** */
@@ -38,7 +74,7 @@
             console.log("Creating a response body");
             // and now we put an HTML form in the body of the answer
             response.write(`<form method="GET" action="/submit">
-                                <label for="name">Give your name</label>
+                                <label for="name">Give name of file</label>
                                 <input name="name">
                                 <br>
                                 <input type="submit">
