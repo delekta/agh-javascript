@@ -15,15 +15,15 @@
 const assert = require('assert');
 const Module2 = require('../module');
 
-describe('The sum() method', function () {
-  it('Returns 4 for 2+2', function () {
-    var op = new Module2(2, 2);
-    assert.strictEqual(op.sum(), 4)
+describe('The sum() method', () => {
+  it('Returns 4 for 2+2', () => {
+    const op = new Module2(2, 2);
+    assert.strictEqual(op.sum(), 4);
     // expect(op.sum()).to.equal(4);
   });
-  it('Returns 0 for -2+2', function () {
-    var op = new Module2(-2, 2);
-    assert.strictEqual(op.sum(), 0)
+  it('Returns 0 for -2+2', () => {
+    const op = new Module2(-2, 2);
+    assert.strictEqual(op.sum(), 0);
     // expect(op.sum()).to.equal(0);
   });
 });

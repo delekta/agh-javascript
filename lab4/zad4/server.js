@@ -1,3 +1,6 @@
+const fs = require('fs');
+const mime = require('mime-types');
+
 /**
 	 * Handles incoming requests.
 	 *
@@ -24,30 +27,50 @@
                 var res = "";
                 let path = url.searchParams.get('name');
                 console.log(path);
-                console.log(path);
-                const fs = require('fs');
-                fs.access(path, fs.constants.F_OK, function(err){
-                    if(!err){
-                        fs.readFile(path, (err, data) => {
-                            if(!err){
-                                res += `File "${path}" exist\n`
-                                // Uncomment to display File content!
-                                // res += "[File: " + path + " content]\n"
-                                // res += data;
-                                // console.log("res += data");
-                            }else{
-                                res += `Directory "${path}" exist\n`
+                if(fs.existsSync(path)){
+                    if(fs.statSync(path).isFile()){
+                        // jesli reprezentuje dokument html
+                        if(mime.lookup(path) == "text/html"){
+                            res += 'file is html\n';
+                            let data = fs.readFileSync(path, 'utf-8')
+                            // res += "[File: `" + path + "` content]\n";
+                            // replace all \n 
+                            var ret = data.replace(/\n/g,'')
+                            let regexpTable = /<\s*table[^>]*>(.*?)<\s*\/\s*table>/g;
+                            let matchAllTable = ret.matchAll(regexpTable);
+                            // console.log(matchAll);
+                            for(match of matchAllTable){
+                                res += '[Table]\n'
+                                // res += match[1];
+                                let regexpTr = /<\s*tr[^>]*>(.*?)<\s*\/\s*tr>/g;
+                                let matchAllTr = match[1].matchAll(regexpTr)
+                                for(matchTr of matchAllTr){
+                                    let regexpTd = /<\s*td[^>]*>(.*?)<\s*\/\s*td>/g;
+                                    let matchAllTd = matchTr[1].matchAll(regexpTd)
+                                    for(matchTd of matchAllTd){
+                                        // console.log(matchTd[1])
+                                        res +=  matchTd[1] + "\t"
+                                    }
+                                    res += '\n'
+                                }
+                                res += '\n\n\n'
                             }
-                            response.write(res)
-                            console.log("Secesfully sending a response!");
-                            response.end();
-                        })  
-                    }else{
-                        response.write(`File/Directory "${path}" DOES NOT exist`)
-                        console.log("Secesfully sending a response!");
-                        response.end();
+                            // res += 'test\t123\n'
+                            // res += '1\t1\n'
+                            
+                        }
+
+                        res += "File exists\n";
+                        
                     }
-                });
+                    else if(fs.statSync(path).isDirectory()){
+                        res += "Directory exist\n";
+                    }
+                }else{
+                    res += "File/Directory do not exists in this folder\n";
+                }
+                response.write(res);
+                response.end();
             }
             else{
                 // If other method was used to send data to the server
@@ -66,7 +89,7 @@
             console.log("Creating a response body");
             // and now we put an HTML form in the body of the answer
             response.write(`<form method="GET" action="/submit">
-                                <label for="name">Give name of file</label>
+                                <label for="name">Give names of files in sequence: name1 name2 ...</label>
                                 <input name="name">
                                 <br>
                                 <input type="submit">

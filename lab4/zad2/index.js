@@ -4,7 +4,7 @@ const word = process.argv[2];
 
 const path = './' + word;
 
-try{
+// try{
     if(fs.existsSync(path)){
         if(fs.statSync(path).isFile()){
             console.log("File exists");
@@ -18,6 +18,6 @@ try{
     }else{
         console.log("File/Directory do not exists in this folder");
     }
-}catch(err){
-    console.error(err);
-}
+// }catch(err){
+//     console.error(err);
+// }
