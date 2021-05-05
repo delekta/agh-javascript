@@ -39,17 +39,17 @@ const mime = require('mime-types');
                             let regexpTable = /<\s*table[^>]*>(.*?)<\s*\/\s*table>/g;
                             let matchAllTable = ret.matchAll(regexpTable);
                             // console.log(matchAll);
-                            for(match of matchAllTable){
+                            for(table of matchAllTable){
                                 res += '[Table]\n'
                                 // res += match[1];
                                 let regexpTr = /<\s*tr[^>]*>(.*?)<\s*\/\s*tr>/g;
-                                let matchAllTr = match[1].matchAll(regexpTr)
-                                for(matchTr of matchAllTr){
+                                let matchAllTr = table[1].matchAll(regexpTr)
+                                for(tr of matchAllTr){
                                     let regexpTd = /<\s*td[^>]*>(.*?)<\s*\/\s*td>/g;
-                                    let matchAllTd = matchTr[1].matchAll(regexpTd)
-                                    for(matchTd of matchAllTd){
+                                    let matchAllTd = tr[1].matchAll(regexpTd)
+                                    for(td of matchAllTd){
                                         // console.log(matchTd[1])
-                                        res +=  matchTd[1] + "\t"
+                                        res +=  td[1] + "\t"
                                     }
                                     res += '\n'
                                 }
