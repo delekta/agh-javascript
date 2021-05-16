@@ -64,11 +64,22 @@ const mime = require('mime-types');
                         
                     }
                     else if(fs.statSync(path).isDirectory()){
-                        res += "Directory exist\n";
+                        res += "Directory exist!\n";
+                        var table = "<style>table, th, td, tr{border: 1px solid black; border-collapse: collapse;}</style>"
+                        table += `<table><tr><th>Plik</th><th>Czas dostępu(atime)</th><th>Czas modyfikacji(mtime)</th></tr>`
+                        filenames = fs.readdirSync(path);
+                        filenames.forEach((filename) => {
+                            stat = fs.statSync(path + "/" + filename)
+                            // console.log(`${filename}\t${stat.atime}\t${stat.mtime}\n`);
+                            table += `<tr><td>${filename}</td><td>${stat.atime}</td><td>${stat.mtime}</td></tr>`;
+                        })
+                        table += `</table>`
+                        res += table
                     }
                 }else{
                     res += "File/Directory do not exists in this folder\n";
                 }
+                response.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
                 response.write(res);
                 response.end();
             }
@@ -105,6 +116,7 @@ const mime = require('mime-types');
     /* Main block
     /* ************************************************** */
     var http = require("http");
+const { table } = require('console');
     
     var server = http.createServer(requestListener); // The 'requestListener' function is defined above
     server.listen(8080);
