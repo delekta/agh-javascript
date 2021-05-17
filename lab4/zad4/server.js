@@ -61,6 +61,7 @@ const mime = require('mime-types');
                         }
 
                         res += "File exists\n";
+                        response.writeHead(200, { "Content-Type": "text/plain; charset=utf-8" });
                         
                     }
                     else if(fs.statSync(path).isDirectory()){
@@ -75,11 +76,12 @@ const mime = require('mime-types');
                         })
                         table += `</table>`
                         res += table
+                        response.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
                     }
                 }else{
                     res += "File/Directory do not exists in this folder\n";
                 }
-                response.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
+                
                 response.write(res);
                 response.end();
             }
