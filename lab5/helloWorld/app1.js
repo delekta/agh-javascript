@@ -8,7 +8,7 @@ var y = 2;
 var result = `<h1>${x} + ${y} = ${x + y}</h1>`
 
 var arithmetic_funcs = {
-    "+": (x, y) => x + y,
+    "+": (x, y) => parseInt(x) + parseInt(y),
     "-": (x, y) => x - y,
     "*": (x, y) => x * y,
     "/": (x, y) => x / y,
@@ -28,32 +28,88 @@ app.listen(3000, function () {
 });
 
 app.get('/json/:name', function(req, res){
-    fs.readFile(`${__dirname}/json/${req.params.name}`, (err, res)=>{
+    fs.readFile(`./json/${req.params.name}`, (err, res2)=>{
         if (err){
             console.log(err);
-            res.status(404).send("404 not found")
+            // res.status(404).send("404 not found")
         }else{
-            console.log("Jestem tu")
-            let all_operations = JSON.parse(res).operations
-            console.log(res);
+            let all_operations = JSON.parse(res2).operations
             let table = `<table>
-                        <tr> 
-                        <td>x</td>
-                        <td>Operation</td>
-                        <td>y</td>
-                        <td>Result</td>
-                        </tr>`;
+                            <tr> 
+                                <th>x</th>
+                                <th>Operation</th>
+                                <th>y</th>
+                                <th>Result</th>
+                            </tr>`;
             for(o of all_operations){
                 table += `<tr>
-                        <td>${o.x}</td>
-                        <td>${o.operation}</td>
-                        <td>${o.y}</td>
-                        <td>${arithmetic_funcs[o.operation](o.x, o.y)}</td>
-                        </tr>`
+                            <td>${o.x}</td>
+                            <td>${o.operation}</td>
+                            <td>${o.y}</td>
+                            <td>${arithmetic_funcs[o.operation](o.x, o.y)}</td>
+                          </tr>`
             }
             table += `</table>`
-            res.send(`${table}`);
+            style  = `<style>table, td, th, tr{border: 1px solid black; border-collapse:collapse; padding: 5px} </style>`
+            res.send(`${style}${table}`);
         }
     })
 })
 
+app.get('/calculate/:operation/:x/:y', function(req, res){
+    if(req.params.operation in arithmetic_funcs){
+        let result = arithmetic_funcs[req.params.operation](req.params.x, req.params.y)
+        res.send(`${req.params.x} ${req.params.operation} ${req.params.y} = ${result}`)
+        let MongoClient = require("mongodb").MongoClient;
+        let url = "mongodb://localhost:27017";
+        MongoClient.connect(url, {
+            useNewUrlParser: true,
+            useUnifiedTopology: true
+        }, (err, client) => {
+            if (err) {
+                return console.log(err);
+            }
+            const db = client.db('jsmongo');
+            // console.log(db.collection('operations').find());
+            db.collection('operations').insertOne({operation: req.params.operation, x: req.params.x, y: req.params.y})
+        });
+    }else{
+        console.log("Nie ma takiej opercaji");
+    }
+    
+})
+
+app.get('/result', function(req, res){
+        let MongoClient = require("mongodb").MongoClient;
+        let url = "mongodb://localhost:27017";
+        MongoClient.connect(url, {
+            useNewUrlParser: true,
+            useUnifiedTopology: true
+        }, (err, client) => {
+            if (err) {
+                return console.log(err);
+            }
+            const db = client.db('jsmongo');
+            // console.log(db.collection('operations').find());
+            db.collection('operations').find().toArray((err, all_operations) => {
+                let table = `<table>
+                            <tr> 
+                                <th>x</th>
+                                <th>Operation</th>
+                                <th>y</th>
+                                <th>Result</th>
+                            </tr>`;
+            for(o of all_operations){
+                table += `<tr>
+                            <td>${o.x}</td>
+                            <td>${o.operation}</td>
+                            <td>${o.y}</td>
+                            <td>${arithmetic_funcs[o.operation](o.x, o.y)}</td>
+                          </tr>`
+            }
+            table += `</table>`
+            style  = `<style>table, td, th, tr{border: 1px solid black; border-collapse:collapse; padding: 5px} </style>`
+            res.send(`${style}${table}`);
+            })
+        });
+})
