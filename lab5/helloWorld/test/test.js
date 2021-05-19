@@ -13,3 +13,5 @@ describe('GET /', function() {
          .expect(200, done);
       });
 });
+// chai conatins
+//expect(actual.data).to.be.a('string').that.contains('</math>');
