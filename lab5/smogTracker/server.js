@@ -6,28 +6,33 @@ var app = express();
 app.set('views', __dirname + '/views'); // Files with views can be found in the 'views' directory
 app.set('view engine', 'pug');          // Use the 'Pug' template system
 
-app.use(logger('dev')); 
+app.use(logger('dev'));
+
+// wazne zeby miec dostep do req.body w metodzie post
+app.use(express.urlencoded());
+app.use(express.json()); 
 
 // let stationId = 10123;
-let stationsIds = [402, 401, 400, 10447, 10121, 10123, 11303]
+let stationsAddresses = {
+    402: "Kraków, ul. Bulwarowa",
+    401: "Kraków ul. Bujaka",
+    400: "Kraków, Aleja Krasińskiego", 
+    10447: "Kraków, os. Wadów", 
+    10121: "Kraków, ul. Dietla", 
+    10123: "Kraków, ul. Złoty Róg", 
+    11303: "Kraków, os. Swoszowice"
+}
 // const url = `http://api.gios.gov.pl/pjp-api/rest/station/sensors/${stationId}`;
 
-// http.get(url, res => {
-//     res.setEncoding("utf8");
-//     let body = "";
-//     res.on("data", data => {
-//       body += data;
-//     });
-//     res.on("end", () => {
-//       body = JSON.parse(body);
-//       console.log(body);
-//     });
-//   });
-
 app.get('/getData', function(req, res){
-    for(let stationId of stationsIds){
-        const url = `http://api.gios.gov.pl/pjp-api/rest/station/sensors/${stationId}`;
-        http.get(url, res2 => {
+    let MongoClient = require("mongodb").MongoClient;
+    let mongourl = "mongodb://localhost:27017";
+
+    // add currrent values
+    for(let stationId of Object.keys(stationsAddresses)){
+        console.log(stationId)
+        let apiurl = `http://api.gios.gov.pl/pjp-api/rest/station/sensors/${stationId}`;
+        http.get(apiurl, res2 => {
             res2.setEncoding("utf8");
             let body = "";
             res2.on("data", data => {
@@ -36,14 +41,12 @@ app.get('/getData', function(req, res){
             });
             res2.on("end", () => {
                 body = JSON.parse(body);
-                // console.log(body);
+                console.log(body);
                 var paramCodes = [];
                 for(obj of body){
                     paramCodes.push(obj.param.paramCode)
                 }
-                let MongoClient = require("mongodb").MongoClient;
-                let url = "mongodb://localhost:27017";
-                MongoClient.connect(url, {
+                MongoClient.connect(mongourl, {
                     useNewUrlParser: true,
                     useUnifiedTopology: true
                 }, (err, client) => {
@@ -51,7 +54,7 @@ app.get('/getData', function(req, res){
                         return console.log(err);
                     }
                     const db = client.db('smogtracker');
-                    
+                    db.collection("stations").deleteOne({stationId: stationId})
                     // console.log(db.collection('operations').find());
                     db.collection('stations').insertOne({stationId: stationId, paramCodes: paramCodes})
                     });
@@ -78,14 +81,22 @@ app.get('/', function (req, res) {      // The first route
         const db = client.db('smogtracker');
         // console.log(db.collection('operations').find());
         db.collection('stations').find().toArray((err, all_stations) => {
+            stations_objs = []
+            for(station of all_stations){
+                stations_objs.push({
+                    stationId: station.stationId,
+                    address: stationsAddresses[station.stationId]
+                })
+            }
             console.log(all_stations);
-            res.render('form', {options:all_stations});
+            res.render('form', {options: stations_objs});
         })
     });
 });
 
-app.get('/station', function (req, res) {
-    let stationId = parseInt(req.query.stationId);
+app.post('/station', function (req, res) {
+    let stationId = parseInt(req.body.stationId);
+    // console.log(req.body);
     let MongoClient = require("mongodb").MongoClient;
     let url = "mongodb://localhost:27017";
     MongoClient.connect(url, {
@@ -96,16 +107,12 @@ app.get('/station', function (req, res) {
             return console.log(err);
         }
         const db = res2.db('smogtracker');
-        db.collection('stations').findOne({stationId: stationId}).then((station, err) => {
+        db.collection('stations').findOne({stationId: stationId.toString()}).then((station, err) => {
             if (err) {
                 return console.log(err);
             }
             console.log(station.paramCodes);
-            res.render('index', {result: `Stacja ${stationId}, zarejstrowane zanieczyszenie ${station.paramCodes}`})
+            res.render('station', {station: `Stacja ${stationId}`, pollutions: station.paramCodes})
         })
-        // res.render('index', {result: `Stacja ${stationId}`})
-
-
     });
-    
 });
